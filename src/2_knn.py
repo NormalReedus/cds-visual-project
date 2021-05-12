@@ -3,41 +3,36 @@ import os
 import numpy as np
 from sklearn.neighbors import NearestNeighbors
 
-# # matplotlib
-# import matplotlib.pyplot as plt
-# import matplotlib.image as mpimg
-# %matplotlib inline
-
-from utils import get_filenames
+from utils import get_filepaths
 from shutil import copyfile # To show the output images
 
 
 # %% LOAD FEATURE_LIST
-feature_list = np.genfromtxt('../data/feature_list.csv', delimiter=",")
+feature_list = np.genfromtxt(os.path.join('..', 'data', 'feature_list.csv'), delimiter=",")
 
 # %% NEAREST NEIGHBORS
 neighbors = NearestNeighbors(n_neighbors=10, 
                              algorithm='brute',
                              metric='cosine').fit(feature_list)
 
-distances, indices = neighbors.kneighbors([feature_list[0]])
+distances, indices = neighbors.kneighbors([feature_list[50]])
 
+# Contains indices of the files that are the closest neighbors to the target
+# idxs[0] is the target image
 idxs = []
-for i in range(1,6):
+for i in range(0,10):
     print(distances[0][i], indices[0][i])
     idxs.append(indices[0][i])
 
-# # %% SHOW CLOSEST
-# filenames = get_filenames() 
-
-# # plot 3 most similar
-# f, axarr = plt.subplots(1,3)
-# axarr[0].imshow(mpimg.imread(filenames[idxs[0]]))
-# axarr[1].imshow(mpimg.imread(filenames[idxs[1]]))
-# axarr[2].imshow(mpimg.imread(filenames[idxs[2]]))
 # %% # SAVE OUTPUT
-filenames = get_filenames() 
+# All image paths
+filepaths = get_filepaths() 
 
-#! Use original file extension
-copyfile(filenames[idxs[0]], '../output/img.jpg') 
+for i, fileidx in enumerate(idxs):
+    file = filepaths[fileidx]
+    _, fileext = os.path.splitext(file)
+
+    # new neighboring file is identified by fileidx and named according to how close it is to the target (i)
+    copyfile(filepaths[fileidx], os.path.join('..', 'output', f'{i}{fileext}')) 
+
 # %%
