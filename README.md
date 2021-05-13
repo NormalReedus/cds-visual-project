@@ -4,8 +4,8 @@
     - Vi kunne lave et script, der downloader dataene og flytter dem ind i `./data/`?
     - Husk en guide til at hente WGET på Windows
 - Husk at forklare noget om hvor lang tid det tager (og giv mulighed for en demo)
-- Lav filenames og `get_file_list` til en util, da den bruges i begge scripts
 - Tilføj mulighed for at passe et custom data-dir ind i begge scripts
+- Lav beskrivelse af, at man kan køre en demo for at se at første script virker, og så kan man kopiere all_features ind i /features for at teste anden del på det fulde data
 
 ## Reproducibility
 - Make sure you have permissions to run the `create_visual_venv` bash scripts. On Linux (GNOME) this can be done by right clicking the file, entering 'Permissions' and checking the box that says: 'Allow executing file as program". In bash this can be done by `cd`ing into the containing directory and running `chmod +x create_visual_venv.sh` or `chmod +x create_visual_win_venv.sh` if you are on Windows.

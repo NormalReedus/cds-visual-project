@@ -1,23 +1,15 @@
 import os
 
-#! make extensions all lowercase
-def get_filepaths(root_dir = '../data/'):
-    # define valid file extensions
+def get_filepaths(data_dir = os.path.join('..', 'data')):
+    # Valid file extensions
     extensions = ['.jpg', '.jpeg', '.png']
-    # create empty file list
+
+    # Create a list of image filepaths
     file_list = []
-    # initialise counter
-    counter = 1
-    # use os.walk to create a list of image filepaths
-    for root, directories, filepaths in os.walk(root_dir):
+    for root, directories, filepaths in os.walk(data_dir):
         for filepath in filepaths:
-            # keep only those with valid extensions
+            # Keep only those with valid extensions
             if any(ext in filepath.lower() for ext in extensions):
                 file_list.append(os.path.join(root, filepath))
-                # increment counter
-                counter += 1
 
-    filepaths = sorted(file_list)
-
-    return filepaths
-
+    return file_list

@@ -1,6 +1,7 @@
 # %% IMPORTS
 # base tools
 import os
+import json
 
 # data analysis
 import numpy as np
@@ -52,7 +53,7 @@ model = ResNet50(weights='imagenet',
                   pooling='avg',
                   input_shape=IMAGE_SHAPE)
 
-# %% EXTRACT FEATURES & LOAD FILES
+# %% LOAD FILES, EXTRACT FEATURES & CREATE REFERENCES TO ORIGINAL FILES
 
 # Returns a list of all images in data/
 filepaths = get_filepaths() 
@@ -60,13 +61,28 @@ filepaths = get_filepaths()
 # Contains the image embeddings
 feature_list = []
 
+# Mapping between filenames and the index of the corresponding image embedding features in feature_list
+file_map = []
+
 #! SAMPLE
 sample_num = 100
 # Do the actual feature (image embedding) extraction for all images
-for i in tqdm(range(sample_num)):
+for i in tqdm(range(len(filepaths))):
     feature_list.append(extract_features(filepaths[i], model))
+    # Save reference to the original image file
+    filename = os.path.basename(filepaths[i])
+    # Index of filename in file_map will match index in feature_list
+    file_map.append(filename)
 
 # %% SAVE FEATURE_LIST
 # Save features to a file, so this script does not have to run every time
-np.savetxt(os.path.join('..', 'data', 'feature_list.csv'), feature_list, delimiter=",")
+np.savetxt(os.path.join('..', 'features', 'feature_list.csv'), feature_list, delimiter=",")
+
+# Save references to the original filenames
+with open(os.path.join('..', 'features', 'file_map.json'), 'w') as file:
+    json.dump(file_map, file)
 # %%
+
+
+# ARGS
+# Where to get data
