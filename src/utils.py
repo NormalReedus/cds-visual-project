@@ -1,21 +1,18 @@
 import os
 
-def get_filenames(root_dir = '../data/'):
-    # define valid file extensions
-    extensions = ['.jpg', '.JPG', '.jpeg', '.JPEG', '.png', '.PNG']
-    # create empty file list
+def get_filepaths(data_dir = os.path.join('..', 'data')):
+    # Valid file extensions
+    extensions = ['.jpg', '.jpeg', '.png']
+
+    # Create a list of image filepaths
     file_list = []
-    # initialise counter
-    counter = 1
-    # use os.walk to create a list of image filepaths
-    for root, directories, filenames in os.walk(root_dir):
-        for filename in filenames:
-            # keep only those with valid extensions
-            if any(ext in filename for ext in extensions):
-                file_list.append(os.path.join(root, filename))
-                # increment counter
-                counter += 1
+    for root, directories, filepaths in os.walk(data_dir):
+        for filepath in filepaths:
+            # Keep only those with valid extensions
+            if any(ext in filepath.lower() for ext in extensions):
+                file_list.append(os.path.join(root, filepath))
 
-    filenames = sorted(file_list)
+    if len(file_list) == 0:
+        raise Exception(f'cannot find data in: {data_dir}')
 
-    return filenames
+    return file_list

@@ -1,6 +1,8 @@
-# %% IMPORTS
 # base tools
 import os
+import json
+import argparse
+from pathlib import Path
 
 # data analysis
 import numpy as np
@@ -8,52 +10,85 @@ from numpy.linalg import norm
 from tqdm import tqdm
 
 # tensorflow
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' # No cuda warnings
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from tensorflow.keras.applications.resnet50 import ResNet50, preprocess_input
 
-from utils import get_filenames
+from utils import get_filepaths
 
-# %% HELPERS
+# ResNet expects a 224x224px image
+IMAGE_SHAPE = (224, 224, 3)
+
+# Preprocesses images for ResNet and extracts the image embedding data
 def extract_features(img_path, model):
-    """
-    Extract features from image data using pretrained model (e.g. VGG16)
-    """
-    # Define input image shape - remember we need to reshape
-    input_shape = (224, 224, 3)
-    # load image from file path
-    img = load_img(img_path, target_size=(input_shape[0], 
-                                          input_shape[1]))
-    # convert to array
+    
+    # load image from file path and resizes to IMAGE_SHAPE
+    img = load_img(img_path, target_size=(IMAGE_SHAPE[0], 
+                                          IMAGE_SHAPE[1]))
+
+    # convert to numpy ndarray since we can manipulate this
     img_array = img_to_array(img)
-    # expand to fit dimensions
+
+    # wrap in ndarray to explicitly say that there is just 1 image (ResNet50 expects array of images)
     expanded_img_array = np.expand_dims(img_array, axis=0)
+
     # preprocess image - see last week's notebook
     preprocessed_img = preprocess_input(expanded_img_array)
-    # use the predict function to create feature representation
+
+    # generate image embedding feature representation of the given image
     features = model.predict(preprocessed_img)
-    # flatten
+
     flattened_features = features.flatten()
-    # normalise features
+
     normalized_features = flattened_features / norm(features)
-    return flattened_features
+
+    return normalized_features
+
+def main(data_path, sample_num):
+    # ImageNet is a great, diverse dataset
+    # We don't include the last layer (top) since we need image embedding features, not the classification part
+    # Average pooling is good for natural, diverse images with more complex motifs
+    model = ResNet50(weights='imagenet', 
+                    include_top=False,
+                    pooling='avg',
+                    input_shape=IMAGE_SHAPE)
+
+    # Returns a list of all images in data/
+    filepaths = get_filepaths(data_path)
+
+    # Contains the image embeddings
+    feature_list = []
+
+    # Mapping between filenames and the index of the corresponding image embedding features in feature_list
+    file_map = []
+
+    if sample_num != None:
+        num_files = sample_num
+    else:
+        num_files = len(filepaths)
+
+    # Do the actual feature (image embedding) extraction for all images
+    for i in tqdm(range(num_files)):
+        feature_list.append(extract_features(filepaths[i], model))
+        # Save reference to the original image file
+        filename = os.path.basename(filepaths[i])
+        # Index of filename in file_map will match index in feature_list
+        file_map.append(filename)
+
+    # Save features to a file, so this script does not have to run every time
+    np.savetxt(os.path.join('..', 'features', 'feature_list.csv'), feature_list, delimiter=",")
+
+    # Save references to the original filenames
+    with open(os.path.join('..', 'features', 'file_map.json'), 'w') as file:
+        json.dump(file_map, file)
 
 
-# %% LOAD MODEL
-model = ResNet50(weights='imagenet', 
-                  include_top=False,
-                  pooling='avg',
-                  input_shape=(224, 224, 3))
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description = "extract image embedding features from the instagram dataset")
+   
+    parser.add_argument("-d", "--data_path", default=Path('../data/'), type = Path, help = "path to the directory containing the image files")
+    parser.add_argument("-s", "--sample_num", default=None, type = int, help = "a number of sample files to extract features from (to avoid using the whole dataset). Omit this if you are useing the whole dataset")
 
-# %% EXTRACT FEATURES & LOAD FILES
-filenames = get_filenames() 
-
-feature_list = []
-
-#! SAMPLE
-sample_num = 200
-for i in tqdm(range(sample_num)):
-    feature_list.append(extract_features(filenames[i], model))
-
-# %% SAVE FEATURE_LIST
-np.savetxt('../data/feature_list.csv', feature_list, delimiter=",")
-# %%
+    args = parser.parse_args()
+    
+    main(data_path = args.data_path, sample_num = args.sample_num)
