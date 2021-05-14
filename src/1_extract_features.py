@@ -10,6 +10,7 @@ from numpy.linalg import norm
 from tqdm import tqdm
 
 # tensorflow
+os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3' # No cuda warnings
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from tensorflow.keras.applications.resnet50 import ResNet50, preprocess_input
 

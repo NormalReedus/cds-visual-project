@@ -9,6 +9,9 @@
 - Forklar at kun nogle filer kan bruges, hvis man kører script 1 med en demo
 - Lav forklaring om hvordan filstrukturen skal se ud i projektet (lav mapper, der ikke findes)
 - Forklar at man skal køre scripts inde fra src for at paths virker
+- Forklar at man skal aktivere venv efter det er bygget (det gør den ikke ad sig selv, i hvert fald på windows)
+- Forklar at bash og python er nødvendigt at have
+- Forklar at man manuelt skal slette outputs, hvis man vil køre den igen
 
 ## Reproducibility
 - Make sure you have permissions to run the `create_visual_venv` bash scripts. On Linux (GNOME) this can be done by right clicking the file, entering 'Permissions' and checking the box that says: 'Allow executing file as program". In bash this can be done by `cd`ing into the containing directory and running `chmod +x create_visual_venv.sh` or `chmod +x create_visual_win_venv.sh` if you are on Windows.
