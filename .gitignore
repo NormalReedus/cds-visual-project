@@ -2,6 +2,7 @@ cv101/
 data/
 *.csv
 *.json
+testvenv/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
