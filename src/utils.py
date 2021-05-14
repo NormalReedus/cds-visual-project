@@ -19,4 +19,3 @@ def get_filenames(root_dir = '../data/'):
     filenames = sorted(file_list)
 
     return filenames
-
