@@ -23,8 +23,8 @@ def run():
     # api.authenticate()
     # api.dataset_download_files('prithvijaunjale/instagram-images-with-captions', path='../data', unzip = True, quiet=False)
 
-    for root, dirs, files in os.walk(os.path.join('..', 'data')):
-        print(root, dirs)
+    yeet = os.walk(os.path.join('..', 'data'))
+    print(yeet.files)
     
     #Move around the files
     # data_dir_path = os.path.join('..', 'data')
