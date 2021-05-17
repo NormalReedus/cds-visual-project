@@ -1,5 +1,6 @@
 cv101/
 output/
+features/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

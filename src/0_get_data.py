@@ -5,9 +5,9 @@ import os
 import shutil
 import argparse
 
-#Should this be argparsed? As long as the downloaded dataset has its data at the bottom of directories, this will work but..?
+# Should this be argparsed? As long as the downloaded dataset has its data at the bottom of directories, this will work but..?
 
-#Delete everything in a folder that doesnt have the valid_suffix as extension   
+# Delete everything in a folder that doesnt have the valid_suffix as extension   
 def filter_dir(dir_path, valid_suffixes):
     dir_contents = os.listdir(dir_path)
     for content in dir_contents:
@@ -20,13 +20,13 @@ def filter_dir(dir_path, valid_suffixes):
             else:
                 os.remove(content_path)
 
-#Move all files in a folder to another folder
+# Move all files in a folder to another folder
 def move_files(list_of_paths, target_folder_path):
     for path in list_of_paths:
         shutil.move(path, target_folder_path)
 
-#Runs to the bottom of all dirs in the root-dir.
-#once the bottom is reached in each dir, return a list of all the files on the bottom of each dir. 
+# Runs to the bottom of all dirs in the root-dir.
+# once the bottom is reached in each dir, return a list of all the files on the bottom of each dir. 
 def get_bottom_dir_paths(root_dir_path):
     dir_contents = os.listdir(root_dir_path)
     bottom_dir_paths = []
@@ -41,7 +41,7 @@ def get_bottom_dir_paths(root_dir_path):
 
     return bottom_dir_paths
 
-#Checks if a dir contains anything.
+# Checks if a dir contains anything.
 def dir_is_empty(dir_path):
     print(len(os.listdir(dir_path)))
     if len(os.listdir(dir_path)) == 0:
@@ -49,7 +49,7 @@ def dir_is_empty(dir_path):
     else:
         return False
 
-#Deletes all subdirectories aswell as files inside a dir. 
+# Deletes all subdirectories aswell as files inside a dir. 
 def delete_everything_in_dir(dir_path):
     dir_contents = os.listdir(dir_path)
     for content in dir_contents:
@@ -66,14 +66,14 @@ def main(kaggle_url, data_dir_path):
             print('Deleting everythinging in data folder')
             delete_everything_in_dir(data_dir_path)
 
-        #Kaggle download
+        # Kaggle download
         api = KaggleApi()
         api.authenticate()
         
         print('Downloading dataset from kaggle - the delay after the bar hits 100 is the script unzipping. Please be patient.')
         api.dataset_download_files(kaggle_url, force=True, path='../data', unzip = True, quiet=False)
 
-        #Moving files - housekeeping
+        # Moving files - housekeeping
         print('Moving files')
         bottom_dir_paths = get_bottom_dir_paths(data_dir_path)
         move_files(bottom_dir_paths, data_dir_path)
