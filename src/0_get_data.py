@@ -88,7 +88,7 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser(description= 'Download dataset from a given kaggle dataset-url')
 
     parser.add_argument('-ku', '--kaggle_url', required=True, type = str, help = 'a kaggle url consists of username/dataset_name')
-    parser.add_argument("-d", "--data_path", default=Path('../data/'), type = Path, help = "path to the destination of the data")
+    parser.add_argument("-d", "--data_path", default=Path('../data/'), type = Path, help = "path to where you want to save the images")
 
 
     args = parser.parse_args()

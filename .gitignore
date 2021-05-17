@@ -1,9 +1,5 @@
 cv101/
-data/
-*.csv
-*.json
 output/
-features/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

@@ -50,7 +50,7 @@ def main(num_neighbors, target_name, data_path):
         copyfile(filepath, os.path.join('..', 'output', f'{i}{file_ext}')) 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description = "extract image embedding features from the instagram dataset")
+    parser = argparse.ArgumentParser(description = "identify the images most resembling a target image")
    
     parser.add_argument("-t", "--target_name", required = True, type = str, help = "name of the image file (in data_path) that you wish to find similar images to")
     parser.add_argument("-d", "--data_path", default = Path('../data/'), type = Path, help = "path to the directory containing the image files")

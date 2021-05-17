@@ -84,7 +84,7 @@ def main(data_path, sample_num):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description = "extract image embedding features from the instagram dataset")
+    parser = argparse.ArgumentParser(description = "extract image embedding features from the image data")
    
     parser.add_argument("-d", "--data_path", default=Path('../data/'), type = Path, help = "path to the directory containing the image files")
     parser.add_argument("-s", "--sample_num", default=None, type = int, help = "a number of sample files to extract features from (to avoid using the whole dataset). Omit this if you are useing the whole dataset")
