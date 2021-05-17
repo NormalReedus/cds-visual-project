@@ -68,11 +68,11 @@ Your repository should now have at least these files and directories:
     - This repo comes with a demo dataset of objects that you can use, OR
     - You can run `python 0_get_data.py` to download an arbitrary dataset from Kaggle
         - NOTE: The script will automatically find the raw images, but only if these are in the outermost leaf-directories of the data
-        - In order to be able to use the kaggle api from python, a valid username and api-key must be present. This is downloaded as a JSON file by clicking on "Create New API Token" on your kaggle "account" page 
+        - In order to be able to use the kaggle API from python, a valid username and api-key must be present. This is downloaded as a JSON file by clicking on "Create New API Token" on your kaggle "account" page 
         - The kaggle API will look for this json-file in:
             - ~/.kaggle/kaggle.json if you're on a Unix system
             - C:\users\<Windows-username>\.kaggle\kaggle.json if you're on Windows
-        - `-ku` or `--kaggle_url` (required) is the location of the dataset to download (e.g. `<username>/<dataset-name>)
+        - `-ku` or `--kaggle_url` (required) is the location of the dataset to download (e.g. `<username>/<dataset-name>`)
         - `-d` or `--data_path` (default is `../data/`) is the path to where you want to save the image files
         - E.g.:
         ```bash
@@ -86,8 +86,8 @@ Your repository should now have at least these files and directories:
     python 1_extract_features.py -d ../some/other/path/ -s 300
     ```
 - If you wish to try identifying similar images without extracting features for all of the data you can download our pre-extracted features and file map from the whole (included) dataset here, and place these files in `../features/`:
-    - [`feature_list.csv`](https://drive.google.com/file/d/1Amobxa8Ps80qEWUPSfGlAnjwvddw0Y2t/view?usp=sharing "Google Drive")
-    - [`file_map.json`](https://drive.google.com/file/d/1tU_d_RVqqSk4uhvBpg9beZG5ZjkUa4u6/view?usp=sharing "Google Drive")
+    - [feature_list.csv](https://drive.google.com/file/d/1Amobxa8Ps80qEWUPSfGlAnjwvddw0Y2t/view?usp=sharing "Google Drive")
+    - [file_map.json](https://drive.google.com/file/d/1tU_d_RVqqSk4uhvBpg9beZG5ZjkUa4u6/view?usp=sharing "Google Drive")
 - You can now find images in the dataset that most resemble a target image by running `python 2_knn.py -t <some image>`
     - `-t` or `--target_name` is required, this is the name of the image file in `data_path` to find other resembling images from
         - NOTE: This name does not include the path to the image, just the filename
