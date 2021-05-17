@@ -97,4 +97,4 @@ Your repository should now have at least these files and directories:
     ```bash
     python 2_knn.py -t image_of_cat.jpg -d ../some/other/path/ -nn 25
     ```
-- Your terminal should show a readout of the images that resemble your target in order (including the target itself), and copy the resembling files into `../output` for inspection. The files will be ordered so number `0` will be the target image, number `1` will be the most resembling image and so on up until `num_neighbors` 
+- Your terminal should show a readout of the images that resemble your target in order (including the target itself), and copy the resembling files into `../output/` for inspection. The files will be ordered so number `0` will be the target image, number `1` will be the most resembling image and so on up until `num_neighbors` 
