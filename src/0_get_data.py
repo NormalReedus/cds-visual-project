@@ -5,19 +5,18 @@ import shutil
 
 #Should this be argparsed? As long as the downloaded dataset has its data at the bottom of directories, this will work but..?
 
-#Delete everything in a folder that doesnt have the valid_suffix as extension
-def filter_dir(dir_path, valid_suffix):
+#Delete everything in a folder that doesnt have the valid_suffix as extension   
+def filter_dir(dir_path, valid_suffixes):
     dir_contents = os.listdir(dir_path)
     for content in dir_contents:
         _, extension = os.path.splitext(content)
         content_path = os.path.join(dir_path, content)
 
-        if extension.lower() != valid_suffix:
+        if extension.lower() not in valid_suffixes:
             if os.path.isdir(content_path):
                 shutil.rmtree(content_path)
             else:
                 os.remove(content_path)
-        
 
 #Move all files in a folder to another folder
 def move_files(list_of_paths, target_folder_path):
@@ -42,6 +41,7 @@ def get_bottom_dir_paths(root_dir_path):
 
 #Checks if a dir contains anything.
 def dir_is_empty(dir_path):
+    print(len(os.listdir(dir_path)))
     if len(os.listdir(dir_path)) == 0:
         return True
     else:
@@ -60,7 +60,8 @@ def delete_everything_in_dir(dir_path):
 def run(data_dir_path):
     user_input = input('This script will download and place the files from our kaggle dataset. In doing so, it will delete everything inside the data-directory within this repo and replace it. Continue? [yes/no] ')
     if user_input == 'yes' or user_input == 'Yes' or user_input == 'y' or user_input == 'Y':
-        if dir_is_empty(data_dir_path):
+        if not dir_is_empty(data_dir_path):
+            print('Deleting everythinging in data folder')
             delete_everything_in_dir(data_dir_path)
 
         #Kaggle download
@@ -74,7 +75,7 @@ def run(data_dir_path):
         print('Moving files')
         bottom_dir_paths = get_bottom_dir_paths(data_dir_path)
         move_files(bottom_dir_paths, data_dir_path)
-        filter_dir(data_dir_path, '.jpg')
+        filter_dir(data_dir_path, ['.jpg', '.png', '.jpeg'])
 
     elif user_input == 'no' or user_input == 'No' or user_input == 'n' or user_input == 'N':
         print('Abandon ship!')
