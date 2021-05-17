@@ -72,7 +72,10 @@ Your repository should now have at least these files and directories:
 
 - Change into `/src/` with `cd src/` - this is important to make relative paths work correctly
 - You will need to fill `../data/` with image files that are either `.jpg`, `.jpeg`, or `.png` files. To do this you can RUN 0_GET_DATA.PY
-    - In order to be able to use the kaggle api
+    - In order to be able to use the kaggle api from python, a valid username and api-key must be present. This is downloaded as a JSON file by clicking on "Create New API Token" on your kaggle "account" page. 
+    - The kaggle API will look for this json-file in:
+        - ~/.kaggle/kaggle.json if you're on linux
+        - C:\users\<Windows-username>\.kaggle\kaggle.json if you're on windows.
 EXPLAIN THAT THIS WOULD WORK WELL WITH SOMETHING LIKE INSTAGRAM-DATA, BUT YOU CAN USE WHATEVER (GET A KAGGLE API KEY AND FIND DATA THERE ETC)
 - You can now run `python 1_extract_features.py` to generate reusable image embedding features for all images in `../data/`. These features (and a map linking them to the original files) will be saved in `../features/`
     - You can change the path to the data folder with the flag `-d` or `--data_path` (default is `../data/`)
