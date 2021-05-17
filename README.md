@@ -1,11 +1,4 @@
 # cds-visual-project
-## Notes
-- Find ud af hvordan vi beder brugeren om at hente data
-    - Vi kunne lave et script, der downloader dataene og flytter dem ind i `./data/`?
-    - Husk en guide til at hente WGET på Windows
-- Lav beskrivelse af, at man kan køre en demo for at se at første script virker, og så kan man kopiere all_features ind i /features for at teste anden del på det fulde data
-- Forklar at man manuelt skal slette outputs, hvis man vil køre den igen
-
 ## Prerequisites
 You will need to have Bash and Python 3 installed on your computer. These scripts have been tested with Python 3.9.1 on Windows 10 and Python 3.8.6 on Linux (Ubuntu flavour).
 
