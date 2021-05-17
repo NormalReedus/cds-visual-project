@@ -88,7 +88,7 @@ Your repository should now have at least these files and directories:
 - If you wish to try identifying similar images without extracting features for all of the data you can download our pre-extracted features and file map from the whole (included) dataset here, and place these files in `../features/`:
     - [feature_list.csv](https://drive.google.com/file/d/1Amobxa8Ps80qEWUPSfGlAnjwvddw0Y2t/view?usp=sharing "Google Drive")
     - [file_map.json](https://drive.google.com/file/d/1tU_d_RVqqSk4uhvBpg9beZG5ZjkUa4u6/view?usp=sharing "Google Drive")
-- You can now find images in the dataset that most resemble a target image by running `python 2_knn.py -t <some image>`
+- You can now find images in the dataset that most resemble a target image by running `python 2_knn.py -t <some_image>`
     - `-t` or `--target_name` is required, this is the name of the image file in `data_path` to find other resembling images from
         - NOTE: This name does not include the path to the image, just the filename
         - NOTE: If features have been extracted from only a sample of images you will need to make sure that the target image is one of them. This can be done by selecting the target image name from the list of files in `../features/file_map.json`
