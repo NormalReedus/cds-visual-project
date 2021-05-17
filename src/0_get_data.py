@@ -1,7 +1,9 @@
+import pathlib
 from kaggle.api.kaggle_api_extended import KaggleApi
-from zipfile import ZipFile
+from pathlib import Path
 import os
 import shutil
+import argparse
 
 #Should this be argparsed? As long as the downloaded dataset has its data at the bottom of directories, this will work but..?
 
@@ -57,7 +59,7 @@ def delete_everything_in_dir(dir_path):
         else:
             os.remove(content_path)
 
-def run(data_dir_path):
+def main(kaggle_url, data_dir_path):
     user_input = input('This script will download and place the files from our kaggle dataset. In doing so, it will delete everything inside the data-directory within this repo and replace it. Continue? [yes/no] ')
     if user_input == 'yes' or user_input == 'Yes' or user_input == 'y' or user_input == 'Y':
         if not dir_is_empty(data_dir_path):
@@ -69,7 +71,7 @@ def run(data_dir_path):
         api.authenticate()
         
         print('Downloading dataset from kaggle - the delay after the bar hits 100 is the script unzipping. Please be patient.')
-        api.dataset_download_files('prithvijaunjale/instagram-images-with-captions', force=True, path='../data', unzip = True, quiet=False)
+        api.dataset_download_files(kaggle_url, force=True, path='../data', unzip = True, quiet=False)
 
         #Moving files - housekeeping
         print('Moving files')
@@ -83,4 +85,12 @@ def run(data_dir_path):
         print('Please input either "yes" or "no"')
     
 if __name__ == '__main__':
-    run(os.path.join('..', 'data'))
+    parser = argparse.ArgumentParser(description= 'Download dataset from a given kaggle dataset-url')
+
+    parser.add_argument('-ku', '--kaggle_url', required=True, type = str, help = 'a kaggle url consists of username/dataset_name')
+    parser.add_argument("-d", "--data_path", default=Path('../data/'), type = Path, help = "path to the destination of the data")
+
+
+    args = parser.parse_args()
+
+    main(kaggle_url=args.kaggle_url, data_dir_path=args.data_path)

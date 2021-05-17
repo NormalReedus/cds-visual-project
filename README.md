@@ -76,7 +76,6 @@ Your repository should now have at least these files and directories:
     - The kaggle API will look for this json-file in:
         - ~/.kaggle/kaggle.json if you're on linux
         - C:\users\<Windows-username>\.kaggle\kaggle.json if you're on windows.
-EXPLAIN THAT THIS WOULD WORK WELL WITH SOMETHING LIKE INSTAGRAM-DATA, BUT YOU CAN USE WHATEVER (GET A KAGGLE API KEY AND FIND DATA THERE ETC)
 - You can now run `python 1_extract_features.py` to generate reusable image embedding features for all images in `../data/`. These features (and a map linking them to the original files) will be saved in `../features/`
     - You can change the path to the data folder with the flag `-d` or `--data_path` (default is `../data/`)
     - Since this process *can* take a while you can run the feature extraction on a sample set of files (for demo purposes if the dataset is too large) with the flag `-s` or `--sample_num`
